@@ -36,21 +36,24 @@
             <p class="text-xs text-gray-500">posts créés</p>
         </div>
 
-        {{-- Bienvenue --}}
-        <div class="group bg-gray-900 border border-gray-800 hover:border-violet-600 rounded-2xl p-6
-                    transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-900/20">
-            <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Compte</span>
-                <div class="w-9 h-9 rounded-xl bg-violet-950 border border-violet-800 flex items-center justify-center">
-                    <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                    </svg>
-                </div>
-            </div>
-            <p class="text-lg font-bold text-white mb-1 truncate">{{ Auth::user()->name }}</p>
-            <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+  {{-- Compte --}}
+<a href="{{ route('profile.edit') }}"
+   class="group bg-gray-900 border border-gray-800 hover:border-violet-600 rounded-2xl p-6
+          transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-900/20 block">
+    <div class="flex items-center justify-between mb-4">
+        <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Compte</span>
+        <div class="w-9 h-9 rounded-xl bg-violet-950 border border-violet-800 flex items-center justify-center">
+            <svg class="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
         </div>
+    </div>
+    <p class="text-lg font-bold text-white mb-1 truncate group-hover:text-violet-400 transition">
+        {{ Auth::user()->name }}
+    </p>
+    <p class="text-xs text-gray-500">{{ Auth::user()->email }}</p>
+</a>
 
     </div>
 
