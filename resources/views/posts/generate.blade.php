@@ -31,20 +31,22 @@
                 @csrf
 
                 {{-- Sujet --}}
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">
-                        Sujet du post <span class="text-violet-400">*</span>
-                    </label>
-                    <input type="text" name="sujet"
-                           value="{{ old('sujet') }}"
-                           placeholder="Ex: Comment j'ai appris Laravel en 30 jours"
-                           class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700
-                                  text-white placeholder-gray-500 focus:outline-none focus:border-violet-500
-                                  focus:ring-1 focus:ring-violet-500 transition text-sm"/>
-                    @error('sujet')
-                        <p class="mt-1 text-red-400 text-xs">{{ $message }}</p>
-                    @enderror
+                        <div>
+                <label class="block text-sm font-medium text-gray-300 mb-2">
+                    Sujet du post <span class="text-violet-400">*</span>
+                </label>
+                <input type="text" name="sujet" id="sujet-input"
+                    value="{{ old('sujet') }}"
+                    maxlength="255"
+                    placeholder="Ex: Comment j'ai appris Laravel en 30 jours"
+                    class="w-full px-4 py-3 rounded-xl bg-gray-800 border border-gray-700
+                            text-white placeholder-gray-500 focus:outline-none focus:border-violet-500
+                            focus:ring-1 focus:ring-violet-500 transition text-sm"/>
+                <div class="flex justify-between mt-1">
+                    <x-input-error :messages="$errors->get('sujet')" class="text-red-400 text-xs"/>
+                    <span id="sujet-counter" class="text-xs text-gray-500 ml-auto">0 / 255</span>
                 </div>
+            </div>
 
                 {{-- Ton --}}
                 <div>
@@ -56,12 +58,12 @@
                                    text-white focus:outline-none focus:border-violet-500
                                    focus:ring-1 focus:ring-violet-500 transition text-sm">
                         <option value="">-- Choisir un ton --</option>
-                        <option value="professionnel"  {{ old('ton') == 'professionnel'  ? 'selected' : '' }}>💼 Professionnel</option>
-                        <option value="inspirant"      {{ old('ton') == 'inspirant'      ? 'selected' : '' }}>🌟 Inspirant</option>
-                        <option value="educatif"       {{ old('ton') == 'educatif'       ? 'selected' : '' }}>📚 Éducatif</option>
-                        <option value="storytelling"   {{ old('ton') == 'storytelling'   ? 'selected' : '' }}>📖 Storytelling</option>
-                        <option value="humoristique"   {{ old('ton') == 'humoristique'   ? 'selected' : '' }}>😄 Humoristique</option>
-                        <option value="direct"         {{ old('ton') == 'direct'         ? 'selected' : '' }}>⚡ Direct</option>
+           <option value="professionnel"  {{ old('ton') == 'professionnel'  ? 'selected' : '' }}>Professionnel</option>
+            <option value="inspirant"      {{ old('ton') == 'inspirant'      ? 'selected' : '' }}>Inspirant</option>
+            <option value="educatif"       {{ old('ton') == 'educatif'       ? 'selected' : '' }}>Educatif</option>
+            <option value="storytelling"   {{ old('ton') == 'storytelling'   ? 'selected' : '' }}>Storytelling</option>
+            <option value="humoristique"   {{ old('ton') == 'humoristique'   ? 'selected' : '' }}>Humoristique</option>
+            <option value="direct"         {{ old('ton') == 'direct'         ? 'selected' : '' }}>Direct</option>
                     </select>
                     @error('ton')
                         <p class="mt-1 text-red-400 text-xs">{{ $message }}</p>
@@ -97,14 +99,38 @@
                 </div>
 
                 {{-- Submit --}}
-                <button type="submit"
-                        class="w-full py-3.5 rounded-xl bg-violet-700 hover:bg-violet-600 font-semibold
-                               text-white text-sm transition shadow-lg shadow-violet-900/40">
-                    ✨ Générer mon post LinkedIn
-                </button>
+                <button type="submit" id="submit-btn"
+                    class="w-full py-3.5 rounded-xl bg-violet-700 hover:bg-violet-600 font-semibold
+                        text-white text-sm transition shadow-lg shadow-violet-900/40">
+                <span id="btn-text">Générer mon post LinkedIn</span>
+                <span id="btn-loading" class="hidden">
+                    <svg class="animate-spin inline w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                    </svg>
+                    Génération en cours...
+                </span>
+            </button>
 
             </form>
         </div>
     </div>
+<script>
+    // Compteur de caractères
+    const sujetInput = document.getElementById('sujet-input');
+    const sujetCounter = document.getElementById('sujet-counter');
+    sujetInput.addEventListener('input', function() {
+        sujetCounter.textContent = this.value.length + ' / 255';
+        sujetCounter.classList.toggle('text-red-400', this.value.length > 230);
+        sujetCounter.classList.toggle('text-gray-500', this.value.length <= 230);
+    });
 
+    // Indicateur de chargement
+    document.querySelector('form').addEventListener('submit', function() {
+        document.getElementById('btn-text').classList.add('hidden');
+        document.getElementById('btn-loading').classList.remove('hidden');
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').classList.add('opacity-75', 'cursor-not-allowed');
+    });
+</script>
 </x-app-layout>

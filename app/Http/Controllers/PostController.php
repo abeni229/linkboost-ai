@@ -68,12 +68,31 @@ class PostController extends Controller
     }
 
     // ── Index ─────────────────────────────────────────────────────────────
-    public function index()
-    {
-        $posts = Auth::user()->posts()->latest()->paginate(10);
-        return view('posts.index', compact('posts'));
+  public function index(Request $request)
+{
+    $query = Auth::user()->posts();
+
+    // Filtre par type
+    if ($request->filled('type')) {
+        $query->where('type_generation', $request->type);
     }
 
+    // Filtre par ton
+    if ($request->filled('ton')) {
+        $query->where('ton', $request->ton);
+    }
+
+    // Tri
+    $sort = $request->get('sort', 'latest');
+    if ($sort === 'oldest') {
+        $query->oldest();
+    } else {
+        $query->latest();
+    }
+
+    $posts = $query->paginate(10)->withQueryString();
+    return view('posts.index', compact('posts'));
+}
     // ── Show ──────────────────────────────────────────────────────────────
     public function show(Post $post)
     {

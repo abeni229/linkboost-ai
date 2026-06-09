@@ -5,7 +5,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
 
         {{-- Crédits --}}
-        <div class="group bg-gray-900 border border-gray-800 hover:border-violet-600 rounded-2xl p-6
+       <a href="{{ route('credits.index') }}" class="group bg-gray-900 border border-gray-800 hover:border-violet-600 rounded-2xl p-6
                     transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-900/20">
             <div class="flex items-center justify-between mb-4">
                 <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Crédits restants</span>
@@ -18,10 +18,10 @@
             </div>
             <p class="text-4xl font-bold text-white mb-1">{{ Auth::user()->credits }}</p>
             <p class="text-xs text-gray-500">crédits disponibles</p>
-        </div>
+        </a>
 
         {{-- Posts générés --}}
-        <div class="group bg-gray-900 border border-gray-800 hover:border-violet-600 rounded-2xl p-6
+       <a href="{{ route('posts.index') }}"  class="group bg-gray-900 border border-gray-800 hover:border-violet-600 rounded-2xl p-6
                     transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-900/20">
             <div class="flex items-center justify-between mb-4">
                 <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Posts générés</span>
@@ -34,7 +34,7 @@
             </div>
             <p class="text-4xl font-bold text-white mb-1">{{ Auth::user()->posts()->count() }}</p>
             <p class="text-xs text-gray-500">posts créés</p>
-        </div>
+        </a>
 
   {{-- Compte --}}
 <a href="{{ route('profile.edit') }}"
